@@ -1,0 +1,37 @@
+CREATE DATABASE dbQuiz
+USE dbquiz
+
+CREATE TABLE usuarios (
+id INT AUTO_INCREMENT PRIMARY KEY,
+nome VARCHAR(100) NOT NULL,
+email VARCHAR(150) NOT NULL,
+estado CHAR(2) NOT NULL,
+sexo CHAR(1) NOT NULL,
+criado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE resultados (
+id INT AUTO_INCREMENT PRIMARY KEY,
+usuario_id INT NOT NULL,
+acertos INT NOT NULL,
+criado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+FOREIGN KEY (usuario_id) REFERENCES usuarios(id)
+);
+
+CREATE TABLE respostas (
+id INT AUTO_INCREMENT PRIMARY KEY,
+resultado_id INT NOT NULL,
+questao VARCHAR(255) NOT NULL,
+alternativa_marcada VARCHAR(255) NOT NULL,
+FOREIGN KEY (resultado_id) REFERENCES resultados(id)
+);
+
+show tables
+    select * FROM usuarios
+    select * FROM resultados
+	select * FROM respostas
+    
+SELECT u.nome, u.email, r.id AS resultado_id, r.acertos, res.questao, res.alternativa_marcada FROM usuarios u
+	JOIN resultados r ON r.usuario_id = u.id
+	JOIN respostas res ON res.resultado_id = r.id
+	WHERE r.id = 20;
