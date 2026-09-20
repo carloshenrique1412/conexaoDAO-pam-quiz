@@ -1,0 +1,19 @@
+import {conexao} from '../conexao.js'
+
+async function inserirResposta(infos){
+    const data = [infos]
+    const sql = `INSERT INTO respostas (resultado_id, questao, alternativa_marcada) VALUES ?`
+    const conn = await conexao()
+    
+    try {
+        // Executar a consulta
+        const [results] = await conn.query(sql,[data]);
+
+        await conn.end()
+        return results
+      } catch (err) {
+        throw new Error(err.message)
+      }
+}
+
+export {inserirResposta}
